@@ -7,10 +7,15 @@ import VanillaTilt from "vanilla-tilt";
 const options = {
   scale: 1.1,
   speed: 700,
-  max: 20
+  max: 40,
+  reverse: true,
 }
 
-const ThreeThing = () => {
+type TProps = {
+  expanded : boolean
+}
+
+const ThreeThing = ({expanded}: TProps) => {
   const tilt = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,13 +24,19 @@ const ThreeThing = () => {
     }
   }, [tilt]);
 
+  const box02Ex = expanded ? styles.box02Ex : '';
+  const box01Ex = expanded ? styles.box01Ex : '';
+  const box1Ex = expanded ? styles.box1Ex : '';
+  const box2Ex = expanded ? styles.box2Ex : '';
+
+  const border = expanded ? styles.border1 : styles.border0;
 
   return (
 		<div ref={tilt} className={styles.box} data-tilt-full-page-listening>
-      <div className={styles.box01}></div>
-      <div className={styles.box02}></div>
-      <div className={styles.box1}></div>
-      <div className={styles.box2}></div>
+      <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
+      <div className={`${styles.box_} ${box01Ex} ${border}`}>Expand</div>
+      <div className={`${styles.box_} ${box1Ex} ${border}`}>Your</div>
+      <div className={`${styles.box_} ${box2Ex} ${border}`}>Ideas</div>
     </div>
   );
 };
