@@ -16,7 +16,11 @@ const Home = () => {
         onClick={() => setIsExpanded((current) => !current)}
         >Expand
       </button>
-      <ThreeThing expanded={isExpanded}/>
+      <div className={styles.t3container}>
+      <ThreeThing expanded={isExpanded} transform='translateY(600px)'/>
+
+      </div>
+      {/* <ThreeThing expanded={isExpanded} transform='translateY(-400px)'/> */}
 		</div>
   );
 };

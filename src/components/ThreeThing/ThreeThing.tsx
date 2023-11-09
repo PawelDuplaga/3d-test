@@ -9,16 +9,19 @@ const options = {
   speed: 700,
   max: 60,
   reverse: true,
+  startX: 30,
+  startY: 30
 }
 
 type TProps = {
   expanded : boolean
+  transform: string
 }
 
 // const circles : number [] = Array.from({ length: 100 }, (_, index) => index);
 
 
-const ThreeThing = ({expanded}: TProps) => {
+const ThreeThing = ({expanded, transform}: TProps) => {
   const tilt = useRef<HTMLDivElement>(null);
   
 
@@ -50,7 +53,7 @@ const ThreeThing = ({expanded}: TProps) => {
         
         )
     })
-  } ,[expanded, coloredCircles])
+  } ,[expanded])
 
   const circlesMappedBack = useMemo(() => {
     return coloredCircles.map((color, index) => {
@@ -102,12 +105,16 @@ const ThreeThing = ({expanded}: TProps) => {
   const border = expanded ? styles.border1 : styles.border0;
 
   return (
-		<div className={styles.mv}>
-      <div ref={tilt} className={styles.box} data-tilt-full-page-listening>
-          {/* <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
+		<div>
+      <div 
+        ref={tilt} 
+        className={styles.box}
+        style={{ transform: transform}} 
+        data-tilt-full-page-listening>
+          <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box01Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box1Ex} ${border}`}></div>
-          <div className={`${styles.box_} ${box2Ex} ${border}`}></div> */}
+          <div className={`${styles.box_} ${box2Ex} ${border}`}></div>
           {/* <div className={styles.mainCircle}></div> */}
             {circlesMappedFront}
             {circlesMappedBack}
