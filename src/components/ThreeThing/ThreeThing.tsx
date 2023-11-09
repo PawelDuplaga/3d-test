@@ -7,7 +7,7 @@ import VanillaTilt from "vanilla-tilt";
 const options = {
   scale: 1.1,
   speed: 700,
-  max: 40,
+  max: 60,
   reverse: true,
 }
 
@@ -23,9 +23,12 @@ const ThreeThing = ({expanded}: TProps) => {
   
 
   const coloredCircles = useMemo(() => {
-    return Array.from({ length: 200 }, () => 1);
+    return Array.from({ length: 60 }, () => 1);
   }, []);
 
+  const coloredCirclesX = useMemo(() => {
+    return Array.from({ length: 30 }, () => 1);
+  }, []);
 
   useEffect(() => {
     if(tilt.current !== null){
@@ -42,8 +45,9 @@ const ThreeThing = ({expanded}: TProps) => {
       return (
         <div key={index} className={styles.circle} style={{
           transform: `rotate(${index*(360/coloredCircles.length)}deg) translateX(150px) ${translateZ}`,
-          backgroundColor: `rgba(215,196,149,${1/(1 + index/10)})`
+          backgroundColor: `rgba(215,196,149,${1/(1 + index/15)})`
         }}></div>
+        
         )
     })
   } ,[expanded, coloredCircles])
@@ -61,6 +65,34 @@ const ThreeThing = ({expanded}: TProps) => {
     })
   } ,[expanded])
 
+  const circlesMappedFrontX = useMemo(() => {
+    return coloredCirclesX.map((color, index) => {
+      const translateZ = expanded ? `translateZ(${index*(500/coloredCirclesX.length)}px)` : ``;
+
+      return (
+        <div key={index} className={styles.circle} style={{
+          transform: `rotate(${index*(180/coloredCirclesX.length)}deg) translateX(-150px) ${translateZ}`,
+          backgroundColor: `rgba(161,146,107,${1/(1 + index/15)})`
+        }}></div>
+        
+        )
+    })
+  } ,[expanded, coloredCircles])
+
+  const circlesMappedBackX = useMemo(() => {
+    return coloredCirclesX.map((color, index) => {
+      const translateZ = expanded ? `translateZ(${index*(-500/coloredCirclesX.length)}px)` : ``;
+
+      return (
+        <div key={index} className={styles.circle} style={{
+          transform: `rotate(${index*(-180/coloredCirclesX.length)}deg) translateX(-150px) ${translateZ}`,
+          backgroundColor: `rgba(161,146,107,${1/(1 + index/20)})`
+        }}></div>
+        )
+    })
+  } ,[expanded])
+
+
 
   const box02Ex = expanded ? styles.box02Ex : '';
   const box01Ex = expanded ? styles.box01Ex : '';
@@ -72,13 +104,15 @@ const ThreeThing = ({expanded}: TProps) => {
   return (
 		<div className={styles.mv}>
       <div ref={tilt} className={styles.box} data-tilt-full-page-listening>
-          <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
+          {/* <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box01Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box1Ex} ${border}`}></div>
-          <div className={`${styles.box_} ${box2Ex} ${border}`}></div>
+          <div className={`${styles.box_} ${box2Ex} ${border}`}></div> */}
           {/* <div className={styles.mainCircle}></div> */}
             {circlesMappedFront}
             {circlesMappedBack}
+            {circlesMappedFrontX}
+            {circlesMappedBackX}
       </div>
     </div>
   );
