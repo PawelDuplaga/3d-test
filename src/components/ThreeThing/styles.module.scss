@@ -1,5 +1,5 @@
 .box02Ex {
-    transform: translateZ(-360px);
+    transform: translateZ(-360px) rotate(45deg) scale(0.3);
 }
 
 .box01Ex {
@@ -8,7 +8,7 @@
 }
 
 .box1Ex {
-    transform: translateZ(180px);
+    transform: translateZ(180px) rotate(45deg) scale(0.7);
 }
 
 .box2Ex {
@@ -74,3 +74,22 @@
     
 }
 
+.circle_ {
+    position: absolute;
+    border-radius: 50%;
+    transform: translateZ(1px);
+    transition: all 0.4s ease-in-out;
+}
+
+.circle0 {
+    width: 324px;
+    height: 324px;
+    border: 24px solid rgb(215,196,149,1);
+}
+
+.circle0Ex {
+    width: 10px;
+    height: 10px;
+    transform: translateZ(500px);
+    border: 24px solid rgb(215,196,149,0);
+}

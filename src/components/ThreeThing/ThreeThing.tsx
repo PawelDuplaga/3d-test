@@ -8,9 +8,7 @@ const options = {
   scale: 1.1,
   speed: 700,
   max: 60,
-  reverse: true,
-  startX: 30,
-  startY: 30
+  // reverse: true,
 }
 
 type TProps = {
@@ -26,11 +24,11 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   
 
   const coloredCircles = useMemo(() => {
-    return Array.from({ length: 60 }, () => 1);
+    return Array.from({ length: 120 }, () => 1);
   }, []);
 
   const coloredCirclesX = useMemo(() => {
-    return Array.from({ length: 30 }, () => 1);
+    return Array.from({ length: 80 }, () => 1);
   }, []);
 
   useEffect(() => {
@@ -57,6 +55,7 @@ const ThreeThing = ({expanded, transform}: TProps) => {
 
   const circlesMappedBack = useMemo(() => {
     return coloredCircles.map((color, index) => {
+      if (index === 0) return
       const translateZ = expanded ? `translateZ(${index*(-600/coloredCircles.length)}px)` : ``;
 
       return (
@@ -80,12 +79,13 @@ const ThreeThing = ({expanded, transform}: TProps) => {
         
         )
     })
-  } ,[expanded, coloredCircles])
+  } ,[expanded])
 
   const circlesMappedBackX = useMemo(() => {
     return coloredCirclesX.map((color, index) => {
+      if (index === 0) return
       const translateZ = expanded ? `translateZ(${index*(-500/coloredCirclesX.length)}px)` : ``;
-
+      
       return (
         <div key={index} className={styles.circle} style={{
           transform: `rotate(${index*(-180/coloredCirclesX.length)}deg) translateX(-150px) ${translateZ}`,
@@ -101,9 +101,9 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   const box01Ex = expanded ? styles.box01Ex : '';
   const box1Ex = expanded ? styles.box1Ex : '';
   const box2Ex = expanded ? styles.box2Ex : '';
+  const circle0Ex = expanded ? styles.circle0Ex : styles.circle0;
 
   const border = expanded ? styles.border1 : styles.border0;
-
   return (
 		<div>
       <div 
@@ -115,6 +115,7 @@ const ThreeThing = ({expanded, transform}: TProps) => {
           <div className={`${styles.box_} ${box01Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box1Ex} ${border}`}></div>
           <div className={`${styles.box_} ${box2Ex} ${border}`}></div>
+          <div className={`${styles.circle_} ${circle0Ex}`}></div>
           {/* <div className={styles.mainCircle}></div> */}
             {circlesMappedFront}
             {circlesMappedBack}

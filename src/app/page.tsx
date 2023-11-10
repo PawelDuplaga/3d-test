@@ -1,2 +1,2 @@
-import Home from "@/views/Home";
-export default Home;
+import HomeMain from "@/views/HomeMain";
+export default HomeMain;
