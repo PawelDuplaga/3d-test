@@ -17,7 +17,7 @@ const Home = () => {
         >Expand
       </button>
       <div className={styles.t3container}>
-      <ThreeThing expanded={isExpanded} transform='translateY(600px)'/>
+      <ThreeThing expanded={isExpanded}/>
 
       </div>
       {/* <ThreeThing expanded={isExpanded} transform='translateY(-400px)'/> */}

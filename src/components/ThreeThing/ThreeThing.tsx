@@ -13,7 +13,7 @@ const options = {
 
 type TProps = {
   expanded : boolean
-  transform: string
+  transform?: string
 }
 
 // const circles : number [] = Array.from({ length: 100 }, (_, index) => index);
@@ -28,7 +28,7 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   }, []);
 
   const coloredCirclesX = useMemo(() => {
-    return Array.from({ length: 80 }, () => 1);
+    return Array.from({ length: 30 }, () => 1);
   }, []);
 
   useEffect(() => {
@@ -117,10 +117,10 @@ const ThreeThing = ({expanded, transform}: TProps) => {
           <div className={`${styles.box_} ${box2Ex} ${border}`}></div>
           <div className={`${styles.circle_} ${circle0Ex}`}></div>
           {/* <div className={styles.mainCircle}></div> */}
-            {circlesMappedFront}
-            {circlesMappedBack}
-            {circlesMappedFrontX}
-            {circlesMappedBackX}
+            {/* {circlesMappedFront}
+            {circlesMappedBack} */}
+            {/* {circlesMappedFrontX}
+            {circlesMappedBackX} */}
       </div>
     </div>
   );
