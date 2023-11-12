@@ -31,6 +31,10 @@ const ThreeThing = ({expanded, transform}: TProps) => {
     return Array.from({ length: 30 }, () => 1);
   }, []);
 
+  const smallBoxes = useMemo(() => {
+    return Array.from({ length: 40 }, () => 1)
+  },[])
+
   useEffect(() => {
     if(tilt.current !== null){
       VanillaTilt.init(tilt.current, options);
@@ -96,11 +100,46 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   } ,[expanded])
 
 
+  const boxesMappedFront = useMemo(() => {
+    return smallBoxes.map((color, index) => {
+      const translateZ = expanded 
+      ? `translateZ(${index*(400/smallBoxes.length)}px) rotate(${index*(360/smallBoxes.length)}deg)` 
+      : ``;
+
+      return (
+        <div key={index} className={styles.smallBox} style={{
+          transform: `${translateZ}`,
+          width: 80-index*1.4,
+          height: 80-index*1.4,
+        }}></div>
+        
+        )
+    })
+  } ,[expanded])
+
+  const boxesMappedBack = useMemo(() => {
+    return smallBoxes.map((color, index) => {
+      if (index === 0) return
+      const translateZ = expanded 
+      ? `translateZ(${index*(-400/smallBoxes.length)}px) rotate(${index*(-360/smallBoxes.length)}deg)` 
+      : ``;
+
+      return (
+        <div key={index} className={styles.smallBox} style={{
+          transform: `${translateZ}`,
+          width: 80-index*1.4,
+          height: 80-index*1.4,
+        }}></div>
+        )
+    })
+  } ,[expanded])
+
 
   const box02Ex = expanded ? styles.box02Ex : '';
   const box01Ex = expanded ? styles.box01Ex : '';
   const box1Ex = expanded ? styles.box1Ex : '';
   const box2Ex = expanded ? styles.box2Ex : '';
+  const spinAnimation = expanded ? styles.spinActive : '';
   const circle0Ex = expanded ? styles.circle0Ex : styles.circle0;
 
   const border = expanded ? styles.border1 : styles.border0;
@@ -111,16 +150,19 @@ const ThreeThing = ({expanded, transform}: TProps) => {
         className={styles.box}
         style={{ transform: transform}} 
         data-tilt-full-page-listening>
-          <div className={`${styles.box_} ${box02Ex} ${border}`}></div>
-          <div className={`${styles.box_} ${box01Ex} ${border}`}></div>
-          <div className={`${styles.box_} ${box1Ex} ${border}`}></div>
-          <div className={`${styles.box_} ${box2Ex} ${border}`}></div>
-          <div className={`${styles.circle_} ${circle0Ex}`}></div>
+          {/* <div className={`${styles.box_} ${box02Ex} ${border}`}></div> */}
+          {/* <div className={`${styles.box_} ${box01Ex} ${border}`}></div>
+          <div className={`${styles.box_} ${box1Ex} ${border}`}></div> */}
+          {/* <div className={`${styles.box_} ${box2Ex} ${border}`}></div> */}
+          {/* <div className={`${styles.circle_} ${circle0Ex}`}></div> */}
           {/* <div className={styles.mainCircle}></div> */}
             {/* {circlesMappedFront}
             {circlesMappedBack} */}
             {/* {circlesMappedFrontX}
             {circlesMappedBackX} */}
+            {boxesMappedBack}
+            {boxesMappedFront}
+            <div className={styles.smallBoxMask}></div>
       </div>
     </div>
   );
