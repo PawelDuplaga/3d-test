@@ -2,13 +2,15 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles.module.scss';
-import VanillaTilt from "vanilla-tilt";
+import { VanillaTilt }  from "../../scripts/vanilla-tilts-custom-mini";
 
 const options = {
   scale: 1.1,
   speed: 700,
   max: 60,
-  // reverse: true,
+  reverse: true,
+  mouseXOffset: 0,
+  mouseYOffset: 400,
 }
 
 type TProps = {
@@ -32,6 +34,10 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   }, []);
 
   const smallBoxes = useMemo(() => {
+    return Array.from({ length: 50 }, () => 1)
+  },[])
+
+  const customBoxClones = useMemo(() => {
     return Array.from({ length: 40 }, () => 1)
   },[])
 
@@ -103,14 +109,16 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   const boxesMappedFront = useMemo(() => {
     return smallBoxes.map((color, index) => {
       const translateZ = expanded 
-      ? `translateZ(${index*(400/smallBoxes.length)}px) rotate(${index*(360/smallBoxes.length)}deg)` 
+      ? `translateZ(${index*(400/smallBoxes.length)}px) rotate(${index*(180/smallBoxes.length)}deg)` 
       : ``;
 
       return (
         <div key={index} className={styles.smallBox} style={{
           transform: `${translateZ}`,
-          width: 80-index*1.4,
-          height: 80-index*1.4,
+          // width: 140-index*1.6,
+          // height: 140-index*1.6,
+          width: index*1.6 + 40,
+          height: index*1.6 + 40,
         }}></div>
         
         )
@@ -121,14 +129,61 @@ const ThreeThing = ({expanded, transform}: TProps) => {
     return smallBoxes.map((color, index) => {
       if (index === 0) return
       const translateZ = expanded 
-      ? `translateZ(${index*(-400/smallBoxes.length)}px) rotate(${index*(-360/smallBoxes.length)}deg)` 
+      ? `translateZ(${index*(-400/smallBoxes.length)}px) rotate(${index*(-180/smallBoxes.length)}deg)` 
       : ``;
 
       return (
         <div key={index} className={styles.smallBox} style={{
           transform: `${translateZ}`,
-          width: 80-index*1.4,
-          height: 80-index*1.4,
+          // width: 140-index*1.6,
+          // height: 140-index*1.6,
+          width: index*1.6 + 40,
+          height: index*1.6 + 40,
+        }}></div>
+        )
+    })
+  } ,[expanded])
+
+
+  
+  const customBoxClonesMappedFront = useMemo(() => {
+    return customBoxClones.map((color, index) => {
+      const translateZ = expanded 
+      ? `translateZ(${index*(400/customBoxClones.length)}px) rotate(${index*(180/customBoxClones.length)}deg)` 
+      : ``;
+
+      return (
+        <div key={index} className={styles.customBoxOutside} style={{
+          transform: `${translateZ}`,
+          // width: 140-index*1.6,
+          // height: 140-index*1.6,
+          width: index*1.8 + 100,
+          height: index*1.8 + 100,
+          transition: `all 0.3s ease-in-out ${index/200}s`
+          // transitionDelay: `${index}ms`,
+          // transitionProperty: "all"
+        }}></div>
+        
+        )
+    })
+  } ,[expanded])
+
+
+  const customBoxClonesMappedBack = useMemo(() => {
+    return customBoxClones.map((color, index) => {
+      if (index === 0) return
+      const translateZ = expanded 
+      ? `translateZ(${index*(-400/customBoxClones.length)}px) rotate(${index*(-180/customBoxClones.length)}deg)` 
+      : ``;
+
+      return (
+        <div key={index} className={styles.customBoxOutside} style={{
+          transform: `${translateZ}`,
+          // width: 140-index*1.6,
+          // height: 140-index*1.6,
+          width: index*1.8 + 100,
+          height: index*1.8 + 100,
+          transition: `all 0.3s ease-in-out ${index/200}s`
         }}></div>
         )
     })
@@ -141,6 +196,9 @@ const ThreeThing = ({expanded, transform}: TProps) => {
   const box2Ex = expanded ? styles.box2Ex : '';
   const spinAnimation = expanded ? styles.spinActive : '';
   const circle0Ex = expanded ? styles.circle0Ex : styles.circle0;
+  const smallBoxMaskAnim = expanded ? styles.smallBoxMaskAfter : styles.smallBoxMaskBefore;
+
+  const customBox1 = expanded ? styles.customBox1End : styles.customBox1Start;
 
   const border = expanded ? styles.border1 : styles.border0;
   return (
@@ -162,7 +220,10 @@ const ThreeThing = ({expanded, transform}: TProps) => {
             {circlesMappedBackX} */}
             {boxesMappedBack}
             {boxesMappedFront}
-            <div className={styles.smallBoxMask}></div>
+            {customBoxClonesMappedFront}
+            {customBoxClonesMappedBack}
+            <div className={`${styles.smallBoxMask} ${smallBoxMaskAnim}`}></div>
+            {/* <div className={`${styles.customBoxOutside} ${customBox1}`}></div> */}
       </div>
     </div>
   );
