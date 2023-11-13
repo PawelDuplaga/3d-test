@@ -1,52 +1,4 @@
-// .box02Ex {
-//     transform: translateZ(-360px) rotate(45deg) scale(0.3);
-// }
 
-// .box01Ex {
-//     // transform: translate3d(-200px,30px,-180px);
-//     transform: translateZ(-180px);
-// }
-
-// .box1Ex {
-//     transform: translateZ(180px) rotate(45deg) scale(0.7);
-// }
-
-// .box2Ex {
-//     transform: translateZ(360px);
-//     // transform: translateX(-200px);
-//     // transform: translate3d(200px,30px,360px);
-// }
-
-// .border0 {
-//     border: 4px solid #F85A3E;
-// }
-
-// .border1 {
-//     border: 4px solid #F85A3E;
-// }
-
-// .mv {
-//     transform: translateY(200px);
-// }
-
-// .circle {
-//     position: absolute;
-//     left: calc(50% - 10px);
-//     top: calc(50% - 10px);
-//     height: 20px;
-//     width: 20px;
-//     border-radius: 50%;
-//     will-change: transform;
-//     transition: all 0.4s ease-in-out;
-// }
-
-// .mainCircle {
-//     position: relative;
-//     border-radius: 50%;
-//     width: 300px;
-//     height: 300px;
-//     transition: all 0.4s ease-in-out;
-// }
 
 .box {
     position: relative;
@@ -72,25 +24,6 @@
 
 }
 
-// .circle_ {
-//     position: absolute;
-//     border-radius: 50%;
-//     transform: translateZ(1px);
-//     transition: all 0.4s ease-in-out;
-// }
-
-// .circle0 {
-//     width: 324px;
-//     height: 324px;
-//     border: 24px solid rgb(215,196,149,1);
-// }
-
-// .circle0Ex {
-//     width: 10px;
-//     height: 10px;
-//     transform: translateZ(500px);
-//     border: 24px solid rgb(215,196,149,0);
-// }
 
 .smallBox {
     position: absolute;
@@ -123,7 +56,6 @@
 .customBoxOutside {
     position: absolute;
     border: 2px solid #f85a3e5b;
-    // transition: all 0.3s ease-in-out 0.1s;
 }
 
 .customBox1Start {
