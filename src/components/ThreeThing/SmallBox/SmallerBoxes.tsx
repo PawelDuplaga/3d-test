@@ -1,54 +1,39 @@
 import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-type SmallBoxProps = {
+type SmallBoxesProps = {
     expanded: boolean
-    animated? : boolean
-    length : number
-    rangeZ : number
+    count: number
+    rangeTranslateZ: number
     overallDeg: number
+    color: string,
+    sizeMin: number
+    animated? : boolean
+    sizeIndexMultiplier?: number
+    transitionDelayIndexSub?: number
+    indexStart?: number
+    indexEnd?: number
 }
 
 type AnimatedElementProps = {
   translateZ: string;
   animated : boolean;
-  delay: string;
+  color: string;
+  sizeMin: number
+  sizeIndexMultiplier: number
+  transitionDelayIndexSub: number
+  delay: number;
+  index: number;
 };
 
-// const spin = (translateZ: string) => keyframes`
-//   0% {
-//     transform: ${translateZ} rotate(0deg);
-//   }
-//   100% {
-//     transform: ${translateZ} rotate(360deg);
-//   }
-// `;
-
-const spin = (translateZ: string) => keyframes`
-
-  @-webkit-keyframes spinAnimation {
-    0% {
-      transform: ${translateZ} rotate(0deg);
-    }
-    100% {
-      transform: ${translateZ} rotate(360deg);
-    }
-  }
-
-  @keyframes spinAnimation {
-    0% {
-      transform: ${translateZ} rotate(0deg);
-    }
-    100% {
-      transform: ${translateZ} rotate(360deg);
-    }
-  }
-`;
 
 const generateSpinAnimation = (translateZ: string) => keyframes`
   0% {
     transform: ${translateZ} rotate(0deg);
   }
+  // 50% {
+  //   transform: ${translateZ} rotate(180deg) scale(0.7);
+  // }
   100% {
     transform: ${translateZ} rotate(360deg);
   }
@@ -57,32 +42,52 @@ const generateSpinAnimation = (translateZ: string) => keyframes`
 
 // Define the styled component outside of the component function
 const AnimatedElement = styled.div<AnimatedElementProps>`
-  ${({ translateZ, animated, delay }) => css`
+  ${({ translateZ, animated, color, sizeMin, sizeIndexMultiplier, transitionDelayIndexSub, delay, index }) => css`
     transform: ${translateZ};
-    animation: ${animated ? generateSpinAnimation(translateZ): "NONE"} 3s ease-in-out infinite ${delay};
+    animation: ${animated ? generateSpinAnimation(translateZ): "NONE"} 2s ease-in-out infinite ${index/delay}s;
     position: absolute;
-    border: 1px solid #cacfd65e;
-    transition: all 0.3s ease-in-out;
-    width: 60px;
-    height: 60px;
+    border: ${color};
+    transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
+    width: ${index*sizeIndexMultiplier + sizeMin}px;
+    height: ${index*sizeIndexMultiplier + sizeMin}px;
   `}
 `;
 
 
-const SmallerBoxes = ({ expanded, animated = false, length, rangeZ, overallDeg  } : SmallBoxProps) => {
-  // Define the keyframes outside of the component function
+const SmallerBoxes = ({ 
+  expanded, 
+  count, 
+  rangeTranslateZ, 
+  overallDeg,
+  sizeMin,
+  color,
+  sizeIndexMultiplier = 1,
+  transitionDelayIndexSub = 9999,
+  indexStart = 0,
+  indexEnd = count-1,
+  animated = false, 
+} : SmallBoxesProps) => {
 
-  return Array.from({length: length},(_, index) => {
+  return Array.from({length: count},(_, index) => {
+    if (index < indexStart || index > indexEnd) return null;
+
     const translateZ = expanded
-      ? `translateZ(${index * (rangeZ / length)}px) rotate(${index * (overallDeg / length)}deg)`
+      ? `translateZ(${index * (rangeTranslateZ / count)}px) rotate(${index * (overallDeg / count)}deg)`
       : ``;
-
-    const animation = expanded && animated ? css`${spin(translateZ)} 1s easy-in-out` : 'none';
-    // const animation = expanded && animated ? `spinAnimation 1s ease-in-out` : 'none';
-
-    const delay = `${index/25}s`
-
-    return <AnimatedElement key={index} translateZ={translateZ} animated={animated} delay={delay}/>;
+      
+    return (
+    <AnimatedElement 
+      key={index} 
+      translateZ={translateZ} 
+      animated={animated} 
+      sizeMin={sizeMin}
+      sizeIndexMultiplier={sizeIndexMultiplier}
+      color={color} 
+      delay={25}
+      transitionDelayIndexSub={transitionDelayIndexSub} 
+      index={index}
+    />
+    );
   });
 };
 

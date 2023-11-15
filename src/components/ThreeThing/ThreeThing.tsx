@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import styles from './styles.module.scss';
-import styled, { keyframes } from 'styled-components'
 import { VanillaTilt }  from "../../scripts/vanilla-tilts-custom-mini";
 import SmallerBoxes from './SmallBox/SmallerBoxes';
 
@@ -25,115 +24,72 @@ type TProps = {
 
 
 
-const ThreeThing = ({expanded, transform, animated = false, range1 = 400, range2 = 400}: TProps) => {
+const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProps) => {
   const tilt = useRef<HTMLDivElement>(null);
   
-
-  const smallBoxes = useMemo(() => {
-    return Array.from({ length: 50 }, () => 1)
-  },[])
-
-  const customBoxClones = useMemo(() => {
-    return Array.from({ length: 36 }, () => 1)
-  },[])
-
   useEffect(() => {
     if(tilt.current !== null){
       VanillaTilt.init(tilt.current, options);
     }
   }, [tilt]);
   
- 
-  // const smallerBoxesMemo = useMemo(() => {
-  //   return (
-  //     <SmallerBoxes 
-  //       expanded = {expanded}
-  //       animated = {animated}
-  //       length={50}
-  //       rangeZ={400}
-  //       overallDeg={180}
-  //     />
-  //   )
-  // }, [expanded, animated])
+  const smallBoxesFront = useMemo(() => {
+    return (
+      <SmallerBoxes 
+        expanded={expanded}
+        animated={animated}
+        count={44}
+        color='1px solid #cacfd65e'
+        sizeMin={40}
+        sizeIndexMultiplier={1.6}
+        rangeTranslateZ={400}
+        overallDeg={180}
+     /> )
+  }, [expanded, animated])
 
-  const boxesMappedFront = useMemo(() => {
+  const smallBoxesBack = useMemo(() => {
+    return (
+      <SmallerBoxes 
+        expanded={expanded}
+        animated={animated}
+        count={44}
+        color='1px solid #cacfd65e'
+        sizeMin={40}
+        sizeIndexMultiplier={1.6}
+        rangeTranslateZ={-400}
+        overallDeg={-180}
+        indexStart={1}
+     /> )
+  }, [expanded, animated])
 
+  const bigBoxesFront = useMemo(() => {
+    return (
+      <SmallerBoxes 
+        expanded={expanded}
+        count={36}
+        color='2px solid #f85a3e5b'
+        sizeMin={100}
+        sizeIndexMultiplier={3}
+        transitionDelayIndexSub={200}
+        rangeTranslateZ={400}
+        overallDeg={180}
+      /> )
+  }, [expanded])
 
-
-    return smallBoxes.map((color, index) => {
-      const translateZ = expanded 
-      ? `translateZ(${index*(range1/smallBoxes.length)}px) rotate(${index*(180/smallBoxes.length)}deg)` 
-      : ``;
-
-      
-      return (
-        <div key={index} className={styles.smallBox} style={{
-          transform: `${translateZ}`,
-          width: index*1.6 + 40,
-          height: index*1.6 + 40,
-        }}></div>
-        
-        )
-    })
-  } ,[expanded, range1, smallBoxes])
-
-  const boxesMappedBack = useMemo(() => {
-    return smallBoxes.map((color, index) => {
-      if (index === 0) return
-      const translateZ = expanded 
-      ? `translateZ(${index*(-range1/smallBoxes.length)}px) rotate(${index*(-180/smallBoxes.length)}deg)` 
-      : ``;
-
-      return (
-        <div key={index} className={styles.smallBox} style={{
-          transform: `${translateZ}`,
-          width: index*1.6 + 40,
-          height: index*1.6 + 40,
-        }}></div>
-        )
-    })
-  } ,[expanded, range1, smallBoxes])
-
-
-  
-  const customBoxClonesMappedFront = useMemo(() => {
-    return customBoxClones.map((color, index) => {
-      const translateZ = expanded 
-      ? `translateZ(${index*(range2/customBoxClones.length)}px) rotate(${index*(180/customBoxClones.length)}deg)` 
-      : ``;
-
-      return (
-        <div key={index} className={styles.customBoxOutside} style={{
-          transform: `${translateZ}`,
-          width: index*3 + 100,
-          height: index*3 + 100,
-          transition: `all 0.3s ease-in-out ${index/200}s`
-        }}></div>
-        
-        )
-    })
-  } ,[expanded, range2, customBoxClones])
-
-
-  const customBoxClonesMappedBack = useMemo(() => {
-    return customBoxClones.map((color, index) => {
-      if (index === 0) return
-      const translateZ = expanded 
-      ? `translateZ(${index*(-range2/customBoxClones.length)}px) rotate(${index*(-180/customBoxClones.length)}deg)` 
-      : ``;
-
-      return (
-        <div key={index} className={styles.customBoxOutside} style={{
-          transform: `${translateZ}`,
-          width: index*3 + 100,
-          height: index*3 + 100,
-          transition: `all 0.3s ease-in-out ${index/200}s`
-        }}></div>
-        )
-    })
-  } ,[expanded, range2, customBoxClones])
-
-
+  const bigBoxesBack = useMemo(() => {
+    return (
+      <SmallerBoxes 
+        expanded={expanded}
+        count={36}
+        color='2px solid #f85a3e5b'
+        sizeMin={100}
+        sizeIndexMultiplier={3}
+        transitionDelayIndexSub={200}
+        rangeTranslateZ={-400}
+        overallDeg={-180}
+        indexStart={1}
+      /> )
+  },[expanded])
 
   const smallBoxMaskAnim = expanded ? styles.smallBoxMaskAfter : styles.smallBoxMaskBefore;
 
@@ -144,18 +100,11 @@ const ThreeThing = ({expanded, transform, animated = false, range1 = 400, range2
         className={styles.box}
         style={{ transform: transform}} 
         data-tilt-full-page-listening>
-            {boxesMappedBack}
-            {/* {boxesMappedFront} */}
-            <SmallerBoxes 
-              expanded = {expanded}
-              animated = {animated}
-              length={50}
-              rangeZ={400}
-              overallDeg={180}
-            />
-            {customBoxClonesMappedFront}
-            {customBoxClonesMappedBack}
-            <div className={`${styles.smallBoxMask} ${smallBoxMaskAnim}`}></div>
+          {smallBoxesBack}
+          {smallBoxesFront}
+          {bigBoxesBack}
+          {bigBoxesFront}
+          <div className={`${styles.smallBoxMask} ${smallBoxMaskAnim}`}></div>
       </div>
     </div>
   );
