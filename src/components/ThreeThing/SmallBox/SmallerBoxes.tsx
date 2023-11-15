@@ -11,7 +11,8 @@ type SmallBoxProps = {
 
 type AnimatedElementProps = {
   translateZ: string;
-  animation : any;
+  animated : boolean;
+  delay: string;
 };
 
 // const spin = (translateZ: string) => keyframes`
@@ -56,9 +57,9 @@ const generateSpinAnimation = (translateZ: string) => keyframes`
 
 // Define the styled component outside of the component function
 const AnimatedElement = styled.div<AnimatedElementProps>`
-  ${({ translateZ, animation }) => css`
+  ${({ translateZ, animated, delay }) => css`
     transform: ${translateZ};
-    animation: ${generateSpinAnimation(translateZ)} 1s ease-in-out infinite;
+    animation: ${animated ? generateSpinAnimation(translateZ): "NONE"} 3s ease-in-out infinite ${delay};
     position: absolute;
     border: 1px solid #cacfd65e;
     transition: all 0.3s ease-in-out;
@@ -79,7 +80,9 @@ const SmallerBoxes = ({ expanded, animated = false, length, rangeZ, overallDeg  
     const animation = expanded && animated ? css`${spin(translateZ)} 1s easy-in-out` : 'none';
     // const animation = expanded && animated ? `spinAnimation 1s ease-in-out` : 'none';
 
-    return <AnimatedElement key={index} translateZ={translateZ} animation={animation}/>;
+    const delay = `${index/25}s`
+
+    return <AnimatedElement key={index} translateZ={translateZ} animated={animated} delay={delay}/>;
   });
 };
 
