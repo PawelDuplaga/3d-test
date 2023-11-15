@@ -27,15 +27,26 @@ type AnimatedElementProps = {
 };
 
 
-const generateSpinAnimation = (translateZ: string) => keyframes`
+const generateSpinAnimation = (translateZ: string, color: string) => keyframes`
   0% {
+    border: ${color};
     transform: ${translateZ} rotate(0deg);
+    animation-timing-function: linear;
   }
-  // 50% {
-  //   transform: ${translateZ} rotate(180deg) scale(0.7);
-  // }
+  20% {
+    border: 1px solid #cacfd6c7;
+    transform: ${translateZ} rotate(72deg);
+    animation-timing-function: linear;
+  }
+  40% {
+    border: ${color};
+    transform: ${translateZ} rotate(144deg);
+    animation-timing-function: linear;
+  }
   100% {
+    border: ${color};
     transform: ${translateZ} rotate(360deg);
+    animation-timing-function: easy-out;
   }
 `;
 
@@ -43,11 +54,12 @@ const generateSpinAnimation = (translateZ: string) => keyframes`
 // Define the styled component outside of the component function
 const AnimatedElement = styled.div<AnimatedElementProps>`
   ${({ translateZ, animated, color, sizeMin, sizeIndexMultiplier, transitionDelayIndexSub, delay, index }) => css`
-    transform: ${translateZ};
-    animation: ${animated ? generateSpinAnimation(translateZ): "NONE"} 2s ease-in-out infinite ${index/delay}s;
+    // transform: ${translateZ};
+    animation: ${animated ? generateSpinAnimation(translateZ, color): "none"} 2s ease-out infinite ${index/delay}s;
+    animation-direction: alternate;
     position: absolute;
     border: ${color};
-    transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
+    // transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
     width: ${index*sizeIndexMultiplier + sizeMin}px;
     height: ${index*sizeIndexMultiplier + sizeMin}px;
   `}

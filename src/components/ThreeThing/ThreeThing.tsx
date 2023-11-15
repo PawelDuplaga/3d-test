@@ -38,11 +38,12 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
       <SmallerBoxes 
         expanded={expanded}
         animated={animated}
-        count={44}
+        count={40}
         color='1px solid #cacfd65e'
         sizeMin={40}
+        transitionDelayIndexSub={50}
         sizeIndexMultiplier={1.6}
-        rangeTranslateZ={400}
+        rangeTranslateZ={340}
         overallDeg={180}
      /> )
   }, [expanded, animated])
@@ -52,12 +53,13 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
       <SmallerBoxes 
         expanded={expanded}
         animated={animated}
-        count={44}
+        count={40}
         color='1px solid #cacfd65e'
         sizeMin={40}
         sizeIndexMultiplier={1.6}
-        rangeTranslateZ={-400}
-        overallDeg={-180}
+        transitionDelayIndexSub={50}
+        rangeTranslateZ={-340}
+        overallDeg={180}
         indexStart={1}
      /> )
   }, [expanded, animated])
@@ -66,26 +68,26 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
     return (
       <SmallerBoxes 
         expanded={expanded}
-        count={36}
-        color='2px solid #f85a3e5b'
+        count={30}
+        color='2px solid #f85a3e3f'
         sizeMin={100}
         sizeIndexMultiplier={3}
         transitionDelayIndexSub={200}
-        rangeTranslateZ={400}
+        rangeTranslateZ={340}
         overallDeg={180}
       /> )
   }, [expanded])
-
+ 
   const bigBoxesBack = useMemo(() => {
     return (
       <SmallerBoxes 
         expanded={expanded}
-        count={36}
-        color='2px solid #f85a3e5b'
+        count={30}
+        color='2px solid #f85a3e3f'
         sizeMin={100}
         sizeIndexMultiplier={3}
         transitionDelayIndexSub={200}
-        rangeTranslateZ={-400}
+        rangeTranslateZ={-340}
         overallDeg={-180}
         indexStart={1}
       /> )
@@ -104,7 +106,7 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
           {smallBoxesFront}
           {bigBoxesBack}
           {bigBoxesFront}
-          <div className={`${styles.smallBoxMask} ${smallBoxMaskAnim}`}></div>
+          {/* <div className={`${styles.smallBoxMask} ${smallBoxMaskAnim}`}></div> */}
       </div>
     </div>
   );
