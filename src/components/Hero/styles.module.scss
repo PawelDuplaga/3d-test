@@ -29,6 +29,7 @@
 }
 
 .expandWord {
+    z-index: 0;
     position: absolute;
     left: 280px;
     color: transparent;
@@ -36,9 +37,25 @@
     font-size: 130px;
     -webkit-text-stroke: 1.5px #F85A3E;
     transition: letter-spacing 0.3s ease-in;
-    
+    cursor: grab;
+    user-select: none ;
+
     &:hover{
         letter-spacing: -1px;
     }
    
+    &::selection{
+        background-color: transparent;
+    }
+
 }
+
+.draggableMask {
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    user-select: all;
+    background-color: rgba(0, 139, 139, 0);
+}
+
