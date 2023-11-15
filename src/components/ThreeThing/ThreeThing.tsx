@@ -41,7 +41,7 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
         count={40}
         color='1px solid #cacfd65e'
         sizeMin={40}
-        transitionDelayIndexSub={50}
+        transitionDelayIndexSub={400}
         sizeIndexMultiplier={1.6}
         rangeTranslateZ={340}
         overallDeg={180}
@@ -57,7 +57,7 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
         color='1px solid #cacfd65e'
         sizeMin={40}
         sizeIndexMultiplier={1.6}
-        transitionDelayIndexSub={50}
+        transitionDelayIndexSub={400}
         rangeTranslateZ={-340}
         overallDeg={180}
         indexStart={1}

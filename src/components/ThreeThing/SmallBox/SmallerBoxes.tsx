@@ -54,12 +54,12 @@ const generateSpinAnimation = (translateZ: string, color: string) => keyframes`
 // Define the styled component outside of the component function
 const AnimatedElement = styled.div<AnimatedElementProps>`
   ${({ translateZ, animated, color, sizeMin, sizeIndexMultiplier, transitionDelayIndexSub, delay, index }) => css`
-    // transform: ${translateZ};
+    transform: ${translateZ};
     animation: ${animated ? generateSpinAnimation(translateZ, color): "none"} 2s ease-out infinite ${index/delay}s;
     animation-direction: alternate;
     position: absolute;
     border: ${color};
-    // transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
+    transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
     width: ${index*sizeIndexMultiplier + sizeMin}px;
     height: ${index*sizeIndexMultiplier + sizeMin}px;
   `}
