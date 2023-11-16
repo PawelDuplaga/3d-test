@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import styles from './styles.module.scss';
 import { VanillaTilt }  from "../../scripts/vanilla-tilts-custom-mini";
 import SmallerBoxes from './SmallBox/SmallerBoxes';
+import BigAnimBox from './BigAnimBox/BigAnimBox';
 
 const options = {
   scale: 1.1,
@@ -66,8 +67,9 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
 
   const bigBoxesFront = useMemo(() => {
     return (
-      <SmallerBoxes 
+      <BigAnimBox 
         expanded={expanded}
+        animated
         count={30}
         color='2px solid #f85a3e3f'
         sizeMin={100}
@@ -80,8 +82,9 @@ const ThreeThing = ({expanded, transform, animated = false, range2 = 400}: TProp
  
   const bigBoxesBack = useMemo(() => {
     return (
-      <SmallerBoxes 
+      <BigAnimBox 
         expanded={expanded}
+        animated
         count={30}
         color='2px solid #f85a3e3f'
         sizeMin={100}

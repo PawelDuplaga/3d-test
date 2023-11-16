@@ -30,23 +30,27 @@ type AnimatedElementProps = {
 const generateSpinAnimation = (translateZ: string, color: string) => keyframes`
   0% {
     border: ${color};
-    transform: ${translateZ} rotate(0deg);
-    animation-timing-function: ease-in;
+    transform: ${translateZ};
+    animation-timing-function: linear;
   }
-  20% {
-    border: 1px solid #cacfd6ea;
-    transform: ${translateZ} rotate(72deg);
+  30% {
+    border: ${color};
+    transform: ${translateZ};
     animation-timing-function: linear;
   }
   40% {
-    border: ${color};
-    transform: ${translateZ} rotate(144deg);
+    border: 2px solid #f85a3e75;
+    transform: ${translateZ};
     animation-timing-function: linear;
-    
+  }
+  60% {
+    border: ${color};
+    transform: ${translateZ};
+    animation-timing-function: linear;
   }
   100% {
     border: ${color};
-    transform: ${translateZ} rotate(360deg);
+    transform: ${translateZ};
     animation-timing-function: easy-out;
   }
 `;
@@ -56,7 +60,7 @@ const generateSpinAnimation = (translateZ: string, color: string) => keyframes`
 const AnimatedElement = styled.div<AnimatedElementProps>`
   ${({ translateZ, animated, color, sizeMin, sizeIndexMultiplier, transitionDelayIndexSub, delay, index }) => css`
     transform: ${translateZ};
-    animation: ${animated ? generateSpinAnimation(translateZ, color): "none"} 2s ease-in-out infinite ${index/delay}s;
+    animation: ${animated ? generateSpinAnimation(translateZ, color): "none"} 2s ease-out infinite ${index/delay}s;
     position: absolute;
     border: ${color};
     transition: all 0.3s ease-in-out ${index/transitionDelayIndexSub}s;
@@ -66,7 +70,7 @@ const AnimatedElement = styled.div<AnimatedElementProps>`
 `;
 
 
-const SmallerBoxes = ({ 
+const BigAnimBox = ({ 
   expanded, 
   count, 
   rangeTranslateZ, 
@@ -103,4 +107,4 @@ const SmallerBoxes = ({
   });
 };
 
-export default SmallerBoxes;
+export default BigAnimBox;
