@@ -65,6 +65,7 @@ const AnimatedElement = styled.div<AnimatedElementProps>`
   `}
 `;
 
+//LOL
 
 const SmallerBoxes = ({ 
   expanded, 
